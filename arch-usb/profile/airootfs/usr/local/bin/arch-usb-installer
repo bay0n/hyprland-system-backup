@@ -4,6 +4,7 @@ set -Eeuo pipefail
 readonly APP_CATALOG=/usr/share/arch-usb/apps.tsv
 readonly CONFIG_DEST=/mnt/home/bayon/.config/hypr
 readonly LIVE_LOG=/tmp/arch-usb-installer.log
+export DIALOGRC=/etc/arch-usb/dialogrc
 SELECTED_DISK=
 MOUNTED=0
 TOKEN=
@@ -41,20 +42,22 @@ configure_network() {
 }
 
 disk_candidates() {
-    local live_source live_parent line dev size model parent
+    local live_source live_disk line dev size removable type model source_disk
     live_source=$(findmnt -nro SOURCE /run/archiso/bootmnt 2>/dev/null || true)
-    live_parent=
-    if [[ -n $live_source ]]; then
-        live_parent=$(lsblk -no PKNAME "$live_source" 2>/dev/null | head -n1 || true)
-        [[ -n $live_parent ]] || live_parent=${live_source##*/}
+    live_disk=
+    if [[ -b $live_source ]]; then
+        source_disk=$(lsblk -srno PATH,TYPE "$live_source" 2>/dev/null | awk '$2 == "disk" { print $1; exit }' || true)
+        [[ -n $source_disk ]] && live_disk=$(readlink -f "$source_disk")
     fi
     while IFS= read -r line; do
-        read -r dev size model <<< "$line"
+        read -r dev size removable type <<< "$line"
         [[ -n $dev ]] || continue
-        parent=$(lsblk -no PKNAME "$dev" 2>/dev/null | head -n1 || true)
-        [[ ${dev##*/} == "$live_parent" || $parent == "$live_parent" ]] && continue
+        [[ -n $live_disk && $(readlink -f "$dev") == "$live_disk" ]] && continue
+        # Ventoy and other installer sticks are removable; never offer them as targets.
+        [[ $removable == 1 ]] && continue
+        model=$(lsblk -dnro MODEL "$dev" 2>/dev/null | xargs || true)
         printf '%s\t%s\t%s\n' "$dev" "$size" "${model:-Unknown model}"
-    done < <(lsblk -dnpo NAME,SIZE,MODEL)
+    done < <(lsblk -dnpo NAME,SIZE,RM,TYPE)
 }
 
 select_disk() {
@@ -149,7 +152,7 @@ install_base_system() {
         dux-shell ghostty waybar rofi rofi-calc awww wayvnc
         pipewire pipewire-audio pipewire-pulse wireplumber xdg-desktop-portal
         xdg-desktop-portal-hyprland brightnessctl cliphist wl-clipboard wl-clip-persist
-        playerctl bluez bluez-utils flatpak sddm efibootmgr base-devel curl
+        playerctl bluez bluez-utils flatpak sddm efibootmgr grub os-prober base-devel curl
         network-manager-applet ttf-jetbrains-mono-nerd vulkan-icd-loader mesa
         libva-mesa-driver
     )
@@ -207,21 +210,17 @@ HOSTS
     chmod 440 /mnt/etc/sudoers.d/10-wheel
     sed -i 's/^HOOKS=.*/HOOKS=(base systemd autodetect microcode modconf kms keyboard sd-vconsole block filesystems fsck)/' /mnt/etc/mkinitcpio.conf
     arch-chroot /mnt mkinitcpio -P
-    arch-chroot /mnt bootctl install --no-variables
-    mkdir -p /mnt/boot/loader/entries
-    cat > /mnt/boot/loader/loader.conf <<'LOADER'
-default arch.conf
-timeout 3
-editor no
-LOADER
-    cat > /mnt/boot/loader/entries/arch.conf <<ENTRY
-title   Arch Linux Hyprland
-linux   /vmlinuz-linux
-initrd  /intel-ucode.img
-initrd  /amd-ucode.img
-initrd  /initramfs-linux.img
-options root=UUID=$root_uuid rw
-ENTRY
+    mkdir -p /mnt/boot/grub/themes
+    cp -a /usr/share/arch-usb/grub-theme/Matrix /mnt/boot/grub/themes/
+    sed -i '/^GRUB_THEME=/d; /^GRUB_TIMEOUT_STYLE=/d; /^GRUB_TIMEOUT=/d; /^GRUB_DISABLE_OS_PROBER=/d' /mnt/etc/default/grub
+    cat >> /mnt/etc/default/grub <<'GRUBCFG'
+GRUB_THEME="/boot/grub/themes/Matrix/theme.txt"
+GRUB_TIMEOUT_STYLE=menu
+GRUB_TIMEOUT=5
+GRUB_DISABLE_OS_PROBER=false
+GRUBCFG
+    arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Arch --recheck
+    arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
     arch-chroot /mnt systemctl enable NetworkManager iwd bluetooth sddm
     mkdir -p /mnt/etc/NetworkManager/conf.d
     cat > /mnt/etc/NetworkManager/conf.d/wifi-backend.conf <<'WIFI'
