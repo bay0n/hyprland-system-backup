@@ -1,0 +1,304 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+readonly APP_CATALOG=/usr/share/arch-usb/apps.tsv
+readonly CONFIG_DEST=/mnt/home/bayon/.config/hypr
+readonly LIVE_LOG=/tmp/arch-usb-installer.log
+SELECTED_DISK=
+MOUNTED=0
+TOKEN=
+
+run_logged() {
+    "$@" 2>&1 | tee -a "$LIVE_LOG"
+}
+
+cleanup() {
+    unset TOKEN USER_PASSWORD
+    if (( MOUNTED )); then
+        [[ -d /mnt/etc/sudoers.d ]] && rm -f /mnt/etc/sudoers.d/90-installer-aur || true
+    fi
+    if (( MOUNTED )); then
+        umount -R /mnt 2>/dev/null || true
+    fi
+}
+trap cleanup EXIT
+
+die() {
+    dialog --title 'Installer stopped' --msgbox "$1\n\nInstaller log: $LIVE_LOG" 10 76 || true
+    exit 1
+}
+
+network_ready() {
+    curl --connect-timeout 5 --max-time 10 -fsSI https://archlinux.org >/dev/null
+}
+
+configure_network() {
+    while ! network_ready; do
+        dialog --title 'Internet required' --yesno 'Connect to the internet before continuing. Ethernet may connect automatically. For Wi-Fi, open iwctl and run: station DEVICE scan, station DEVICE get-networks, station DEVICE connect SSID. Return here after connecting.' 12 78 || die 'Network setup was cancelled.'
+        clear
+        iwctl || true
+    done
+}
+
+disk_candidates() {
+    local live_source live_parent line dev size model parent
+    live_source=$(findmnt -nro SOURCE /run/archiso/bootmnt 2>/dev/null || true)
+    live_parent=
+    if [[ -n $live_source ]]; then
+        live_parent=$(lsblk -no PKNAME "$live_source" 2>/dev/null | head -n1 || true)
+        [[ -n $live_parent ]] || live_parent=${live_source##*/}
+    fi
+    while IFS= read -r line; do
+        read -r dev size model <<< "$line"
+        [[ -n $dev ]] || continue
+        parent=$(lsblk -no PKNAME "$dev" 2>/dev/null | head -n1 || true)
+        [[ ${dev##*/} == "$live_parent" || $parent == "$live_parent" ]] && continue
+        printf '%s\t%s\t%s\n' "$dev" "$size" "${model:-Unknown model}"
+    done < <(lsblk -dnpo NAME,SIZE,MODEL)
+}
+
+select_disk() {
+    local dev size model
+    local -a menu=()
+    while IFS=$'\t' read -r dev size model; do
+        [[ -n $dev ]] && menu+=("$dev" "$size — $model")
+    done < <(disk_candidates)
+    ((${#menu[@]})) || die 'No eligible disk was found. The USB source disk is excluded.'
+    SELECTED_DISK=$(dialog --title 'Choose installation drive' --menu 'Select the disk to erase and install Arch Linux onto:' 0 0 0 "${menu[@]}" 3>&1 1>&2 2>&3) || die 'Drive selection was cancelled.'
+    dialog --title 'Confirm disk erase' --yesno "All partitions and data on this drive will be erased:\n\n$SELECTED_DISK\n\nContinue only if this is the correct drive." 12 76 || die 'Disk erase was cancelled.'
+}
+
+read_password() {
+    local first second
+    while :; do
+        first=$(dialog --title 'Create account password' --insecure --passwordbox 'Set the password for the new bayon account:' 9 70 3>&1 1>&2 2>&3) || die 'Password setup was cancelled.'
+        second=$(dialog --title 'Confirm password' --insecure --passwordbox 'Enter the same password again:' 9 70 3>&1 1>&2 2>&3) || die 'Password setup was cancelled.'
+        if [[ -n $first && $first == "$second" ]]; then
+            USER_PASSWORD=$first
+            unset first second
+            return
+        fi
+        unset first second
+        dialog --title 'Passwords do not match' --msgbox 'Enter the same non-empty password twice.' 7 56
+    done
+}
+
+select_apps() {
+    local id name category source package default description state
+    local -a menu=()
+    local -A sources=() packages=()
+    while IFS=$'\t' read -r id name category source package default description; do
+        [[ -n $id && $id != id ]] || continue
+        sources[$id]=$source
+        packages[$id]=$package
+        state=OFF
+        [[ $default == yes ]] && state=ON
+        menu+=("$id" "[$category] $name — $description ($source)" "$state")
+    done < "$APP_CATALOG"
+    local selected
+    selected=$(dialog --title 'Choose apps for this PC' --separate-output --checklist 'Select apps to install. Required Hyprland components are installed automatically. Use Space to toggle and Enter to continue.' 0 0 0 "${menu[@]}" 3>&1 1>&2 2>&3) || die 'App selection was cancelled.'
+    SELECTED_REPO=()
+    SELECTED_AUR=()
+    SELECTED_FLATPAK=()
+    while IFS= read -r id; do
+        [[ -n $id ]] || continue
+        case ${sources[$id]} in
+            repo) SELECTED_REPO+=("${packages[$id]}") ;;
+            aur) SELECTED_AUR+=("${packages[$id]}") ;;
+            flatpak) SELECTED_FLATPAK+=("${packages[$id]}") ;;
+            *) die "Unknown package source for $id." ;;
+        esac
+    done <<< "$selected"
+}
+
+read_repo_credentials() {
+    local repo
+    repo=$(dialog --title 'Private config repository' --inputbox 'GitHub repository in owner/name form:' 9 72 3>&1 1>&2 2>&3) || die 'GitHub setup was cancelled.'
+    [[ $repo =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]] || die 'Repository must be entered as owner/name.'
+    TOKEN=$(dialog --title 'GitHub token' --insecure --passwordbox 'Enter a read-only GitHub token with access to the private config repository. It is kept in memory for this installation.' 10 78 3>&1 1>&2 2>&3) || die 'GitHub authentication was cancelled.'
+    [[ -n $TOKEN ]] || die 'A GitHub token is required to restore the private repository.'
+    REPOSITORY="https://github.com/$repo.git"
+}
+
+install_base_system() {
+    local efi_part root_part root_uuid efi_uuid
+    dialog --title 'Installing Arch Linux' --infobox "Partitioning $SELECTED_DISK and installing the base system. This can take several minutes." 7 74
+    run_logged sgdisk --zap-all "$SELECTED_DISK"
+    run_logged sgdisk -n 1:0:+1G -t 1:ef00 -c 1:EFI "$SELECTED_DISK"
+    run_logged sgdisk -n 2:0:0 -t 2:8300 -c 2:ArchRoot "$SELECTED_DISK"
+    partprobe "$SELECTED_DISK"
+    udevadm settle
+    if [[ $SELECTED_DISK =~ [0-9]$ ]]; then
+        efi_part="${SELECTED_DISK}p1"
+        root_part="${SELECTED_DISK}p2"
+    else
+        efi_part="${SELECTED_DISK}1"
+        root_part="${SELECTED_DISK}2"
+    fi
+    [[ -b $efi_part && -b $root_part ]] || die 'Could not find the newly created partitions.'
+    run_logged mkfs.fat -F32 "$efi_part"
+    run_logged mkfs.ext4 -F "$root_part"
+    mount "$root_part" /mnt
+    MOUNTED=1
+    mkdir -p /mnt/boot
+    mount "$efi_part" /mnt/boot
+
+    local -a core_repo=(
+        base linux linux-firmware amd-ucode intel-ucode sudo git networkmanager iwd dialog
+        hyprland hyprlock hypridle hyprpaper hyprshot hyprpicker hyprland-guiutils
+        dux-shell ghostty waybar rofi rofi-calc awww wayvnc
+        pipewire pipewire-audio pipewire-pulse wireplumber xdg-desktop-portal
+        xdg-desktop-portal-hyprland brightnessctl cliphist wl-clipboard wl-clip-persist
+        playerctl bluez bluez-utils flatpak sddm efibootmgr base-devel curl
+        network-manager-applet ttf-jetbrains-mono-nerd vulkan-icd-loader mesa
+        libva-mesa-driver
+    )
+    local -a core_aur=(elephant-all hyprfm-git)
+    local gpu_list
+    gpu_list=$(lspci -nn | grep -E 'VGA compatible controller|3D controller|Display controller' || true)
+    if grep -qi 'NVIDIA' <<< "$gpu_list"; then
+        core_repo+=(nvidia-open nvidia-utils)
+    fi
+    if grep -qi 'Intel' <<< "$gpu_list"; then
+        core_repo+=(vulkan-intel)
+    fi
+    if grep -Eqi 'AMD|ATI' <<< "$gpu_list"; then
+        core_repo+=(vulkan-radeon)
+    fi
+    if printf '%s\n' "${SELECTED_REPO[@]}" | grep -qx steam; then
+        sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
+        SELECTED_REPO+=(lib32-vulkan-icd-loader lib32-mesa)
+        if grep -qi 'NVIDIA' <<< "$gpu_list"; then
+            SELECTED_REPO+=(lib32-nvidia-utils)
+        fi
+        if grep -qi 'Intel' <<< "$gpu_list"; then
+            SELECTED_REPO+=(lib32-vulkan-intel)
+        fi
+        if grep -Eqi 'AMD|ATI' <<< "$gpu_list"; then
+            SELECTED_REPO+=(lib32-vulkan-radeon)
+        fi
+    fi
+    run_logged pacstrap -K /mnt "${core_repo[@]}" "${SELECTED_REPO[@]}" || die 'Base or selected repository package installation failed.'
+    cp /etc/pacman.conf /mnt/etc/pacman.conf
+    printf '%s\n' "${core_aur[@]}" "${SELECTED_AUR[@]}" > /tmp/arch-usb-aur-packages
+    printf '%s\n' "${SELECTED_FLATPAK[@]}" > /tmp/arch-usb-flatpak-apps
+    root_uuid=$(blkid -s UUID -o value "$root_part")
+    efi_uuid=$(blkid -s UUID -o value "$efi_part")
+    cat > /mnt/etc/fstab <<FSTAB
+UUID=$root_uuid  /      ext4  defaults,noatime  0 1
+UUID=$efi_uuid   /boot  vfat  umask=0077       0 2
+FSTAB
+    arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+    arch-chroot /mnt hwclock --systohc
+    sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /mnt/etc/locale.gen
+    arch-chroot /mnt locale-gen
+    printf 'LANG=en_US.UTF-8\n' > /mnt/etc/locale.conf
+    printf 'KEYMAP=us\n' > /mnt/etc/vconsole.conf
+    printf 'hyprarch\n' > /mnt/etc/hostname
+    cat > /mnt/etc/hosts <<'HOSTS'
+127.0.0.1 localhost
+::1       localhost
+127.0.1.1 hyprarch.localdomain hyprarch
+HOSTS
+    arch-chroot /mnt useradd -m -G wheel,audio,video,storage -s /bin/bash bayon
+    printf 'bayon:%s\n' "$USER_PASSWORD" | arch-chroot /mnt chpasswd
+    unset USER_PASSWORD
+    printf '%%wheel ALL=(ALL:ALL) ALL\n' > /mnt/etc/sudoers.d/10-wheel
+    chmod 440 /mnt/etc/sudoers.d/10-wheel
+    sed -i 's/^HOOKS=.*/HOOKS=(base systemd autodetect microcode modconf kms keyboard sd-vconsole block filesystems fsck)/' /mnt/etc/mkinitcpio.conf
+    arch-chroot /mnt mkinitcpio -P
+    arch-chroot /mnt bootctl install --no-variables
+    mkdir -p /mnt/boot/loader/entries
+    cat > /mnt/boot/loader/loader.conf <<'LOADER'
+default arch.conf
+timeout 3
+editor no
+LOADER
+    cat > /mnt/boot/loader/entries/arch.conf <<ENTRY
+title   Arch Linux Hyprland
+linux   /vmlinuz-linux
+initrd  /intel-ucode.img
+initrd  /amd-ucode.img
+initrd  /initramfs-linux.img
+options root=UUID=$root_uuid rw
+ENTRY
+    arch-chroot /mnt systemctl enable NetworkManager iwd bluetooth sddm
+    mkdir -p /mnt/etc/NetworkManager/conf.d
+    cat > /mnt/etc/NetworkManager/conf.d/wifi-backend.conf <<'WIFI'
+[device]
+wifi.backend=iwd
+WIFI
+}
+
+install_aur_packages() {
+    mapfile -t aur_packages < /tmp/arch-usb-aur-packages
+    ((${#aur_packages[@]})) || return 0
+    arch-chroot /mnt bash -c 'printf "%s\n" "bayon ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/90-installer-aur && chmod 440 /etc/sudoers.d/90-installer-aur'
+    run_logged arch-chroot /mnt runuser -u bayon -- bash -lc 'git clone https://aur.archlinux.org/yay.git /tmp/yay && cd /tmp/yay && makepkg --syncdeps --noconfirm --install' || die 'Could not bootstrap the AUR helper.'
+    run_logged arch-chroot /mnt runuser -u bayon -- yay -S --noconfirm --needed "${aur_packages[@]}" || die 'Selected AUR packages failed to install.'
+    rm -f /mnt/etc/sudoers.d/90-installer-aur
+}
+
+install_flatpak_apps() {
+    mapfile -t flatpak_apps < /tmp/arch-usb-flatpak-apps
+    ((${#flatpak_apps[@]})) || return 0
+    arch-chroot /mnt flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    arch-chroot /mnt flatpak install --system --noninteractive flathub "${flatpak_apps[@]}" || die 'Selected Flatpak apps failed to install.'
+}
+
+restore_configs() {
+    local askpass
+    askpass=$(mktemp /run/arch-usb-askpass.XXXXXX)
+    cat > "$askpass" <<'ASKPASS'
+#!/bin/sh
+case "$1" in
+    *Username*) printf '%s\n' 'x-access-token' ;;
+    *Password*) printf '%s\n' "$ARCH_USB_GITHUB_TOKEN" ;;
+    *) exit 1 ;;
+esac
+ASKPASS
+    chmod 700 "$askpass"
+    mkdir -p "$CONFIG_DEST"
+    if ! GIT_ASKPASS="$askpass" GIT_TERMINAL_PROMPT=0 ARCH_USB_GITHUB_TOKEN="$TOKEN" git clone "$REPOSITORY" "$CONFIG_DEST"; then
+        rm -f "$askpass"
+        die 'Could not clone the private config repository. Check the repository name, token access, and network.'
+    fi
+    rm -f "$askpass"
+    unset TOKEN
+    local backup_dir="$CONFIG_DEST/backup"
+    if [[ -d "$backup_dir/home-config" ]]; then
+        cp -a "$backup_dir/home-config/." /mnt/home/bayon/
+    fi
+    if [[ -d "$backup_dir/dms" ]]; then
+        mkdir -p /mnt/home/bayon/.config/dms
+        cp -a "$backup_dir/dms/." /mnt/home/bayon/.config/dms/
+    fi
+    if [[ -d "$backup_dir/wallpapers" ]]; then
+        mkdir -p /mnt/home/bayon/Pictures/wallpapers
+        cp -a "$backup_dir/wallpapers/." /mnt/home/bayon/Pictures/wallpapers/
+    fi
+    chown -R 1000:1000 /mnt/home/bayon
+}
+
+main() {
+    [[ $EUID == 0 ]] || die 'Run this installer as root.'
+    [[ -d /sys/firmware/efi ]] || die 'Boot the USB in UEFI mode to install.'
+    [[ -r $APP_CATALOG ]] || die "Missing app catalog: $APP_CATALOG"
+    dialog --title 'Arch USB Installer' --yesno 'This installs Arch Linux with Hyprland. It erases one drive you choose, creates a bayon account, and lets you choose apps for this PC. Continue?' 11 76 || exit 0
+    configure_network
+    select_disk
+    read_password
+    select_apps
+    read_repo_credentials
+    install_base_system
+    install_aur_packages
+    install_flatpak_apps
+    restore_configs
+    if dialog --title 'Installation complete' --yesno 'Arch Linux, selected apps, and Hyprland configs are installed. Remove the USB, then reboot now?' 9 76; then
+        sync
+        reboot
+    fi
+    dialog --title 'Installed' --msgbox 'Installation is complete. Remove the USB and reboot when ready.' 7 62
+}
+
+main "$@"

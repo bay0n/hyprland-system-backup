@@ -1,0 +1,220 @@
+{
+  "dankPomodoroTimer": {
+    "enabled": true
+  },
+  "wallpaperCarousel": {
+    "enabled": true,
+    "itemWidth": 282,
+    "cacheSize": 37,
+    "holdDelay": 1500,
+    "wallpaperDirectory": "/home/bayon/Pictures/wallpapers",
+    "overlayOpacity": 69,
+    "expandSelected": "true",
+    "borderWidth": 2,
+    "itemHeight": 394,
+    "enableHoldExpand": "false",
+    "holdExpandRatio": 37,
+    "expandMultiplier": 122,
+    "selectedScale": 111
+  },
+  "nvidiaGpuDankbarMonitor": {
+    "enabled": true
+  },
+  "hiddenBar": {
+    "enabled": true,
+    "usePopout": false,
+    "hideIconPillWhenCollapsed": true,
+    "hideIconPillWhenExpanded": true,
+    "autoExpand": false,
+    "showRegionPreview": true,
+    "triggerAdjustment": -150,
+    "triggerOffset": -100,
+    "triggerHeightAdjustment": 8,
+    "triggerYOffset": -40
+  },
+  "calculator": {
+    "enabled": true,
+    "trigger": "="
+  },
+  "quickCapture": {
+    "enabled": true
+  },
+  "mediaPlayer": {
+    "enabled": false
+  },
+  "emojiLauncher": {
+    "enabled": true
+  },
+  "dockerManager": {
+    "enabled": true
+  },
+  "homeAssistantMonitor": {
+    "enabled": true
+  },
+  "dcalUpcoming": {
+    "enabled": true
+  },
+  "discordVoice": {
+    "enabled": true
+  },
+  "gameControllerBattery": {
+    "enabled": true,
+    "hideWhenNoControllersConnected": true
+  },
+  "fullscreenPowerMenu": {
+    "enabled": true
+  },
+  "audioPortSwitcher": {
+    "enabled": true
+  },
+  "networkIndicator": {
+    "enabled": true
+  },
+  "dankStopwatch": {
+    "enabled": true,
+    "showCentiseconds": false,
+    "showIcon": true,
+    "showLapCountInPill": false,
+    "compactMode": true
+  },
+  "simpleAudioControl": {
+    "enabled": true
+  },
+  "dankTranslate": {
+    "enabled": true,
+    "trigger": "<"
+  },
+  "sathiAi": {
+    "enabled": true,
+    "customProviders": [
+      {
+        "id": "prov_1787387385270_498",
+        "type": "openai",
+        "name": "New OpenAI Compatible",
+        "credential": "",
+        "url": "https://api.openai.com"
+      },
+      {
+        "id": "prov_1787387496954_999",
+        "type": "anthropic",
+        "name": "New Anthropic",
+        "credential": "enc:v1:AApZCQcrTAgvGlVQX10kKgldEmZFZl8nDScAHygYJhEJJwkKVhcaIlI2BmBbQD4wQTE7FRFdCD4/NRYrHBs0CDJraV18K1NZOyQOEhwtMi4ZOwBZMQUcMjFbW2YxVEcvDDUwRDgkFwg+AjUe"
+      }
+    ],
+    "persistChatHistory": true,
+    "chatHistory": null,
+    "showMessageAlerts": true,
+    "showMessageDetails": true,
+    "windowWidth": 350,
+    "windowHeight": 522.34765625
+  },
+  "powerOptions": {
+    "enabled": true,
+    "noTrigger": false,
+    "trigger": "!"
+  },
+  "timer": {
+    "enabled": true,
+    "showPillIcon": true
+  },
+  "timeManager": {
+    "enabled": true,
+    "lastMode": "timer",
+    "useSystemSound": true,
+    "displayMode": "progress",
+    "showPillIcon": true
+  },
+  "cardwireManager": {
+    "enabled": true
+  },
+  "shellyUpdater": {
+    "enabled": true
+  },
+  "mediaControlPlus": {
+    "enabled": false
+  },
+  "enderPulse": {
+    "enabled": true,
+    "variants": [
+      {
+        "id": "builtin_output",
+        "name": "System output",
+        "audioTarget": "system",
+        "audioBackend": "auto",
+        "customAudioSource": "",
+        "icon": "volume_up",
+        "description": "EnderPulse audio source: System output"
+      },
+      {
+        "id": "builtin_microphone",
+        "name": "Microphone input",
+        "audioTarget": "microphone",
+        "audioBackend": "auto",
+        "customAudioSource": "",
+        "icon": "mic",
+        "description": "EnderPulse audio source: Microphone input"
+      }
+    ],
+    "barLength": 80,
+    "bandCount": 27,
+    "smoothing": 78,
+    "backgroundOpacity": 30
+  },
+  "displayProfileManager": {
+    "enabled": true
+  },
+  "batteryPlus": {
+    "enabled": true,
+    "timespanHours": 24
+  },
+  "dgpuStatus": {
+    "enabled": true,
+    "showBattery": false
+  },
+  "extendedNetworkToggle": {
+    "enabled": false
+  },
+  "netStatus": {
+    "enabled": true
+  },
+  "systemMonitor": {
+    "enabled": true,
+    "chartWidth": 30
+  },
+  "dankscale": {
+    "enabled": true,
+    "lastAccount": "Ben2100@gmx.de"
+  },
+  "dnsSwitcher": {
+    "enabled": true
+  },
+  "iwdHotspotManager": {
+    "enabled": true
+  },
+  "lidSuspendToggle": {
+    "enabled": true,
+    "batteryOnly": false,
+    "externalIgnore": false,
+    "action": "suspend"
+  },
+  "protonVPN": {
+    "enabled": true,
+    "paidServersOnly": false
+  },
+  "aiOverviewControl": {
+    "enabled": true
+  },
+  "librepods": {
+    "enabled": true
+  },
+  "dmsAirDrop": {
+    "enabled": true
+  },
+  "cast": {
+    "enabled": true
+  },
+  "screenshotPlus": {
+    "enabled": true,
+    "notify": false
+  }
+}

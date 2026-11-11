@@ -1,0 +1,12 @@
+# Local credentials and machine-specific files
+.aws/
+.codex/
+.agents/
+*.AppImage
+*.pem
+*.key
+*.token
+
+# Generated Arch ISO build output
+arch-usb/out/
+arch-usb/work/

@@ -1,0 +1,551 @@
+{
+  "version": 1,
+  "configurations": [
+    {
+      "id": "auto_5af6115",
+      "name": "",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1080@144.003",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_eed335ba",
+      "name": "",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1080@144.003",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "HDMI-A-1": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_3371e933",
+      "name": "",
+      "outputs": {
+        "HDMI-A-1": {
+          "mode": null,
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "eDP-1": {
+          "mode": "1920x1080@144.003",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-3": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 3840,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_5467317c",
+      "name": "",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1080@144.003",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-3": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_1503c712",
+      "name": "",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1080@144.003",
+          "position": {
+            "x": 0,
+            "y": 1080
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "HDMI-A-1": {
+          "mode": "1920x1080@164.997",
+          "position": {
+            "x": 1920,
+            "y": 540
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-4": {
+          "mode": "1680x1050@59.883",
+          "position": {
+            "x": 3840,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_74bac4b6",
+      "name": "",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1080@144.003",
+          "position": {
+            "x": 0,
+            "y": 1080
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-3": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-4": {
+          "mode": "1680x1050@59.883",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_894d6cbd",
+      "name": "",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1080@144.003",
+          "position": {
+            "x": 0,
+            "y": 1050
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-4": {
+          "mode": "1680x1050@59.954",
+          "position": {
+            "x": 240,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_a9a0fff7",
+      "name": "",
+      "outputs": {
+        "DP-5": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 3840,
+            "y": 540
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "eDP-1": {
+          "mode": "1920x1080@144.003",
+          "position": {
+            "x": 0,
+            "y": 540
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-3": {
+          "mode": "1920x1080@59.939",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_45175739",
+      "name": "Laptop + Philips + Dell + cute (Eizo)",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1080@144.003",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "HDMI-A-1": {
+          "mode": "1280x1024@60.020",
+          "position": {
+            "x": 3840,
+            "y": -470
+          },
+          "scale": 1,
+          "transform": "90",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-3": {
+          "mode": "1920x1080@164.997",
+          "position": {
+            "x": 1920,
+            "y": -540
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-4": {
+          "mode": "1680x1050@59.883",
+          "position": {
+            "x": 240,
+            "y": -1050
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_26a93518",
+      "name": "",
+      "outputs": {
+        "HDMI-A-1": {
+          "mode": "1280x1024@60.020",
+          "position": {
+            "x": 3840,
+            "y": 70
+          },
+          "scale": 1,
+          "transform": "90",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "eDP-1": {
+          "mode": "1920x1080@60.004",
+          "position": {
+            "x": 0,
+            "y": 540
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-3": {
+          "mode": "1920x1080@143.981",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-5": {
+          "mode": "1680x1050@59.883",
+          "position": {
+            "x": 4864,
+            "y": 540
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_cc96956d",
+      "name": "",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1080@60.004",
+          "position": {
+            "x": 0,
+            "y": 1050
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "HDMI-A-1": {
+          "mode": "1280x1024@60.020",
+          "position": {
+            "x": 3840,
+            "y": 580
+          },
+          "scale": 1,
+          "transform": "90",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-4": {
+          "mode": "1680x1050@59.954",
+          "position": {
+            "x": 240,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DVI-I-1": {
+          "mode": "1366x768@60.003",
+          "position": {
+            "x": 4864,
+            "y": 1050
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-3": {
+          "mode": "1920x1080@143.981",
+          "position": {
+            "x": 1920,
+            "y": 510
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_9a1062ee",
+      "name": "",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1080@60.004",
+          "position": {
+            "x": 0,
+            "y": 470
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "HDMI-A-1": {
+          "mode": "1280x1024@60.020",
+          "position": {
+            "x": 3840,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "90",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DVI-I-1": {
+          "mode": "1366x768@60.003",
+          "position": {
+            "x": 4864,
+            "y": 470
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    },
+    {
+      "id": "auto_33422a99",
+      "name": "Laptop + Philips + Dell + cute (Eizo)",
+      "outputs": {
+        "eDP-1": {
+          "mode": "1920x1080@144.003",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "HDMI-A-1": {
+          "mode": "1280x1024@60.020",
+          "position": {
+            "x": 3840,
+            "y": -470
+          },
+          "scale": 1,
+          "transform": "90",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-4": {
+          "mode": "1920x1080@164.997",
+          "position": {
+            "x": 1920,
+            "y": -540
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        },
+        "DP-5": {
+          "mode": "1680x1050@59.883",
+          "position": {
+            "x": 240,
+            "y": -1050
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "hyprland": {}
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+id	name	category	source	package	default	description
+firefox	Firefox	Browsers	repo	firefox	yes	web browser
+firedragon	FireDragon	Browsers	aur	firedragon-bin	yes	privacy browser
+discord	Discord	Communication	repo	discord	no	chat client
+vesktop	Vesktop	Communication	aur	vesktop-bin	no	Discord client
+zapzap	ZapZap	Communication	flatpak	com.rtosta.zapzap	no	WhatsApp client
+steam	Steam	Gaming	repo	steam	yes	game library
+heroic	Heroic Games Launcher	Gaming	aur	heroic-games-launcher-bin	no	Epic and GOG games
+curseforge	CurseForge	Gaming	aur	curseforge	no	mod manager
+minecraft	Minecraft Launcher	Gaming	aur	minecraft-launcher	no	Minecraft launcher
+prismlauncher	Prism Launcher	Gaming	repo	prismlauncher	no	Minecraft instances
+modrinth	Modrinth App	Gaming	flatpak	com.modrinth.ModrinthApp	no	Minecraft mods
+lunarclient	Lunar Client	Gaming	flatpak	com.lunarclient.LunarClient	no	Minecraft client
+sober	Sober	Gaming	flatpak	org.vinegarhq.Sober	no	Roblox launcher
+wine	Wine	Gaming	repo	wine	no	Windows compatibility
+zed	Zed	Development	repo	zed	yes	code editor
+godot	Godot	Development	repo	godot	no	game engine
+android-tools	Android Platform Tools	Development	repo	android-tools	no	Android device tools
+deno	Deno	Development	repo	deno	no	JavaScript runtime
+rust	Rust Toolchain	Development	repo	rust	no	Rust compiler
+qemu	QEMU Desktop	Development	repo	qemu-desktop	no	virtual machines
+virt-manager	Virtual Machine Manager	Development	repo	virt-manager	no	manage virtual machines
+ardour	Ardour	Creative	repo	ardour	no	audio workstation
+kdenlive	Kdenlive	Creative	repo	kdenlive	no	video editor
+obs	OBS Studio	Creative	repo	obs-studio	no	recording and streaming
+pinta	Pinta	Creative	repo	pinta	no	image editor
+libreoffice	LibreOffice	Creative	repo	libreoffice-fresh	no	office suite
+mixxx	Mixxx	Creative	repo	mixxx	no	DJ software
+strawberry	Strawberry	Creative	repo	strawberry	no	music player
+glaxnimate	Glaxnimate	Creative	repo	glaxnimate	no	vector animation
+bespokesynth	BespokeSynth	Creative	flatpak	com.bespokesynth.BespokeSynth	no	modular synthesizer
+spotify	Spotify	Media	aur	spotify	yes	music streaming
+bluetooth	Bluetui	Utilities	repo	bluetui	yes	Bluetooth terminal UI
+impala	Impala	Utilities	repo	impala	yes	Wi-Fi terminal UI
+blueman	Blueman	Utilities	repo	blueman	no	Bluetooth manager
+thunar	Thunar	Utilities	repo	thunar	no	file manager
+nautilus	Files	Utilities	repo	nautilus	no	file manager
+albert	Albert	Utilities	aur	albert	no	application launcher
+flameshot	Flameshot	Utilities	repo	flameshot	no	screenshot tool
+copyq	CopyQ	Utilities	repo	copyq	no	clipboard manager
+waypaper	Waypaper	Utilities	repo	waypaper	no	wallpaper manager
+easyeffects	EasyEffects	Utilities	repo	easyeffects	no	audio effects
+qpwgraph	qpwgraph	Utilities	repo	qpwgraph	no	PipeWire patchbay
+pavucontrol	PulseAudio Volume Control	Utilities	repo	pavucontrol	no	audio mixer
+cava	Cava	Utilities	repo	cava	no	audio visualizer
+btop	btop	Utilities	repo	btop	no	resource monitor
+htop	htop	Utilities	repo	htop	no	process viewer
+bottom	Bottom	Utilities	repo	bottom	no	resource monitor
+fastfetch	Fastfetch	Utilities	repo	fastfetch	no	system information
+rog-control-center	ROG Control Center	Utilities	repo	rog-control-center	no	ASUS laptop controls
+polychromatic	Polychromatic	Utilities	aur	polychromatic	no	Razer device controls
+solaar	Solaar	Utilities	repo	solaar	no	Logitech device controls
+openrazer	OpenRazer	Utilities	aur	openrazer-meta-git	no	Razer device support
+sidequest	SideQuest	Utilities	aur	sidequest-bin	no	VR device manager
+icon-browser	Icon Browser	Utilities	flatpak	io.github.rsvzz.iconvwadw	no	icon browser
+ddcutil	DDCutil	Utilities	repo	ddcutil	no	monitor controls
+proton-vpn	Proton VPN	Utilities	repo	proton-vpn-gtk-app	no	VPN client
+tailscale	Tailscale	Utilities	repo	tailscale	no	mesh VPN
+wireshark	Wireshark	Utilities	repo	wireshark-qt	no	network analyzer
+httrack	HTTrack	Utilities	repo	httrack	no	website copier
+translate-shell	Translate Shell	Utilities	repo	translate-shell	no	command-line translator
+waydroid	Waydroid	Utilities	repo	waydroid	no	Android container
+virt-viewer	Virtual Machine Viewer	Utilities	repo	virt-viewer	no	virtual machine display
+omniclicker	Omniclicker	Utilities	aur	omniclicker	no	automation tool
+eww	Eww	Utilities	aur	eww	no	widget framework
+flipclock	Flip Clock	Utilities	aur	flipclock	no	desktop clock
+gpu-screen-recorder	GPU Screen Recorder	Creative	aur	gpu-screen-recorder-gtk	no	screen recorder
+arc-theme	Arc GTK Theme	Appearance	repo	arc-gtk-theme	no	GTK theme
+catppuccin-theme	Catppuccin GTK Theme	Appearance	repo	catppuccin-gtk-theme-mocha	no	GTK theme
+nwg-look	nwg-look	Appearance	repo	nwg-look	no	GTK settings
+nwg-dock	nwg-dock-hyprland	Appearance	repo	nwg-dock-hyprland	no	Wayland dock
+polybar	Polybar	Appearance	repo	polybar	no	X11 status bar
+i3	i3 Window Manager	Desktops	repo	i3-wm	no	X11 window manager
+picom	Picom	Desktops	aur	picom-ftlabs-git	no	X11 compositor
+betterlockscreen	Betterlockscreen	Desktops	aur	betterlockscreen	no	X11 lock screen
+xairedit	X-AIR Edit	Creative	aur	xairedit-bin	no	Behringer mixer control
+shelly	Shelly	Utilities	aur	shelly	no	shell utility

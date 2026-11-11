@@ -1,0 +1,169 @@
+{
+  "lockfileVersion": 1,
+  "plugins": {
+    "activateLinux": {
+      "repo": "https://github.com/hthienloc/dms-activate-linux",
+      "commit": "34f359aedcac9d27ff5df51d43cc41031ea00f80"
+    },
+    "audioPortSwitcher": {
+      "repo": "https://github.com/osvaldx/Audio-Port-Switcher",
+      "commit": "c09de3433fce36f250625c3ac7ce7dcda8c17fee"
+    },
+    "batteryPlus": {
+      "repo": "https://github.com/arcatva/dms-battery-plus",
+      "commit": "4e653d09174e1edc260f279c42ec2477b6fb2e24"
+    },
+    "calculator": {
+      "repo": "https://github.com/rochacbruno/DankCalculator",
+      "commit": "1db5865419a40a33171a475855a59e0b8bf7187f"
+    },
+    "cardwireManager": {
+      "repo": "https://github.com/jankelemen/cardwire-manager",
+      "commit": "1513e4208d955933432650dbf0238faf5cbeaca7"
+    },
+    "cast": {
+      "repo": "https://github.com/Conava/dux-plugins",
+      "path": "Cast",
+      "commit": "7b55937e68a3625ddb8243a4f2a23d0e4e42a59a"
+    },
+    "cavaVisualizer": {
+      "repo": "https://github.com/ernestowgg/cava-visualizer",
+      "commit": "2d08bef95bc7cd170ad5730a27791c9af6d80a52"
+    },
+    "dankPomodoroTimer": {
+      "repo": "https://github.com/AvengeMedia/dms-plugins",
+      "path": "DankPomodoroTimer",
+      "commit": "cb66135b0af01eacb25f3a656dc86fb727fa02cf"
+    },
+    "dankTranslate": {
+      "repo": "https://github.com/alcxyz/DankTranslate",
+      "commit": "10d88fc770ec54e27da1d7d112bed0b33ce806d7"
+    },
+    "dankscale": {
+      "repo": "https://github.com/dwright134/dms-dankscale",
+      "commit": "bddebf0e2935ba23b0614ff9af5bf8f4ed6d3d9f"
+    },
+    "dcalUpcoming": {
+      "repo": "https://github.com/leoamaro01/dms-dcal",
+      "commit": "8a140c03231a06cbf2cc3754312477c4e9aaadaa"
+    },
+    "dgpuStatus": {
+      "repo": "https://github.com/xantrk/dgpu-sleep-monitor",
+      "commit": "1d181198fd312f1557617e9ff544031070accb84"
+    },
+    "discordVoice": {
+      "repo": "https://github.com/PandorasFox/dms-discord-widget",
+      "commit": "937e33a6c362546fa0a0e8546ff565b3f0945e0b"
+    },
+    "displayProfileManager": {
+      "repo": "https://github.com/jankelemen/dank-display-profile-manager",
+      "commit": "497ea32fe48fe76835d52f7a6794d516cde15b48"
+    },
+    "dmsAirDrop": {
+      "repo": "https://github.com/Kratospidey/dms-airdrop",
+      "commit": "4bc4076210fb4344ec6212bcb3741357dd027bba"
+    },
+    "dnsSwitcher": {
+      "repo": "https://github.com/JDKamalakar/DMS-DNS_Switcher",
+      "commit": "a36f41d93e3ced7aa0787f5b8287532cb3aaeabc"
+    },
+    "dockerManager": {
+      "repo": "https://github.com/LuckShiba/DmsDockerManager",
+      "commit": "255f46794b6e3a5f5e842fe1330db3869deddc09"
+    },
+    "emojiLauncher": {
+      "repo": "https://github.com/devnullvoid/dms-emoji-launcher",
+      "commit": "8ff394e3ddfcb2fd755ed2e7b4c6f01f3e26e596"
+    },
+    "enderPulse": {
+      "repo": "https://github.com/iquantecho/enderpulse",
+      "commit": "7b908fa130a2d3c5cd43e2bfdcb067ee77735c42"
+    },
+    "extendedNetworkToggle": {
+      "repo": "https://github.com/notherealmarco/dms-plugin-extended-network",
+      "commit": "f58b4b28391eaa6157e9b89faf9837f711315930"
+    },
+    "fullscreenPowerMenu": {
+      "repo": "https://github.com/JDKamalakar/DMS-Fullscreen_Power_Menu",
+      "commit": "b474d69cff7564ea4999a9f78ce30027fbac07d2"
+    },
+    "gameControllerBattery": {
+      "repo": "https://github.com/Hujair/gameControllerBattery",
+      "commit": "8ab63f4274e505cbefc2432e9a2e1dd8a1809113"
+    },
+    "homeAssistantMonitor": {
+      "repo": "https://github.com/xxyangyoulin/dms-plugin-hass",
+      "commit": "9acf0ae748b1fd4686b763a85b5b65b5d0931c08"
+    },
+    "hyprwhsprVoiceOverlay": {
+      "repo": "https://github.com/lucianosrp/HyprwhsprVoiceOverlay",
+      "commit": "dd7e1b60fbf31aa01398e54cc27f975958769e5a"
+    },
+    "mediaControlPlus": {
+      "repo": "https://github.com/Dadangdut33/dms-plugins",
+      "path": "MediaControlPlus",
+      "commit": "63fe6b87c497f1f7c2ea61432716817db1c5c3a4"
+    },
+    "mediaPlayer": {
+      "repo": "https://github.com/arrifat346afs/mediaPlayer",
+      "commit": "56ec160ed3fe32ad55b920ff462727d918b6eb51"
+    },
+    "netStatus": {
+      "repo": "https://github.com/noahm-05/dms-net-status",
+      "commit": "511b19a95caee10831ff5accbdcdd211f3ca1b2c"
+    },
+    "networkIndicator": {
+      "repo": "https://github.com/gemb0-0/Network-Indicator.git",
+      "commit": "81d948dbabceba0f446a0441f3901a4d6b6b2f3a"
+    },
+    "nvidiaGpuDankbarMonitor": {
+      "repo": "https://github.com/Reverssss/dms-nvidia-gpu-monitor",
+      "commit": "e9c3e3f29910aafbb9eb2de404752fbffd1d03e2"
+    },
+    "powerOptions": {
+      "repo": "https://github.com/Nazahim/PowerOptions",
+      "commit": "95fa7949fd9614a21bcc7a14ff8cc917a7208cf8"
+    },
+    "protonVPN": {
+      "repo": "https://github.com/JDKamalakar/DMS-Proton_VPN",
+      "commit": "e91e32306b6554e562fafdbc02624befb626c055"
+    },
+    "pureLyrics": {
+      "repo": "https://github.com/lildengzi/pureLyrics",
+      "commit": "6a803e11110a858779da0be20eeb2f724ed28441"
+    },
+    "quickCapture": {
+      "repo": "https://github.com/hthienloc/dms-quick-capture",
+      "commit": "9a60165cbc040e3c8709ff8dd80e1a5d1fabad77"
+    },
+    "screenshotPlus": {
+      "repo": "https://github.com/pcmid/dms-screenshot-plus",
+      "commit": "cae3cf1b820d430e6b76bb8a99066f013074e6af"
+    },
+    "shellyUpdater": {
+      "repo": "https://github.com/rdannenbring/dms-shelly-updater",
+      "commit": "a48f4ad44fca329e3a593da47c4329f2c50a043f"
+    },
+    "simpleAudioControl": {
+      "repo": "https://github.com/Dadangdut33/dms-plugins",
+      "path": "SimpleAudioControl",
+      "commit": "63fe6b87c497f1f7c2ea61432716817db1c5c3a4"
+    },
+    "systemMonitor": {
+      "repo": "https://github.com/chr314/dms-system-monitor",
+      "commit": "c7cb5fbbd393ff8c1d76bf73633abd9fe9859236"
+    },
+    "timeManager": {
+      "repo": "https://github.com/Zhainy/DmsTimeManager",
+      "commit": "2ad012c14c10c0e667ca4e48c8958d4b2206f84f"
+    },
+    "timer": {
+      "repo": "https://github.com/hthienloc/dms-timer",
+      "commit": "73fade01762bd88a19e45bf5d1d663b93ce79fcf"
+    },
+    "wallpaperCarousel": {
+      "repo": "https://github.com/motor-dev/wallpaperCarousel",
+      "commit": "761ecd1b7f347beee9f17909f8334d987c935a1a"
+    }
+  }
+}

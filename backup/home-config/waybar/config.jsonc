@@ -1,0 +1,35 @@
+{
+    "position": "right",
+    "layer": "overlay",
+
+    "width": 58,
+
+    "margin-top": 14,
+    "margin-bottom": 14,
+    "margin-right": 14,
+
+    "spacing": 8,
+
+    "modules-right": [
+        "custom/wifi",
+        "custom/bluetooth"
+    ],
+
+    "custom/wifi": {
+        "format": "{}",
+        "exec": "~/.config/waybar/scripts/wifi.sh",
+        "interval": 3,
+        "return-type": "json",
+        "tooltip": false,
+        "on-click": "foot -a impala impala"
+    },
+
+    "custom/bluetooth": {
+        "format": "{}",
+        "exec": "~/.config/waybar/scripts/bluetooth.sh",
+        "interval": 3,
+        "return-type": "json",
+        "tooltip": false,
+        "on-click": "foot -a bluetui bluetui"
+    }
+}
